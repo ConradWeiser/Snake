@@ -1,3 +1,4 @@
+import assets.Joint;
 import assets.Snake;
 import enums.Direction;
 
@@ -24,7 +25,7 @@ public class Board extends JPanel {
     private final static int totalPixels = (boardWidth * boardHeight) / (pixelSizeHeight * pixelSizeWidth);
 
     //Is the assets currently running?
-    public static volatile boolean inGame = true;
+    public static volatile boolean inGame = false;
 
     //A value used to set the assets speed. A delay between each tick.
     private static int speed = 50;
@@ -35,18 +36,18 @@ public class Board extends JPanel {
     private Direction currentDirection;
 
     //An array representation of the game
-    protected int[][] gameBoard;
+    public int[][] gameBoard;
 
     public Board() {
 
         //Init the user view panel
-        this.setBackground(Color.GRAY);
-        this.setFocusable(true);
-        this.setFocusable(true);
-        this.setFocusTraversalKeysEnabled(false);
-        requestFocus();
+        //this.setBackground(Color.GRAY);
+        //this.setFocusable(true);
+        //this.setFocusable(true);
+        //this.setFocusTraversalKeysEnabled(false);
+        //requestFocus();
 
-        this.setPreferredSize(new Dimension(boardWidth, boardHeight));
+        //this.setPreferredSize(new Dimension(boardWidth, boardHeight));
 
         //Attach the key listener
         this.addKeyListener(new KeyManager());
@@ -60,6 +61,9 @@ public class Board extends JPanel {
         //Create the array representing the game board to the size specified and fill it with zeroes
         gameBoard = new int[boardCells][boardCells];
 
+        //SNAAAAAKKEE
+        this.snake = new Snake(boardCells);
+        startGame();
 
     }
 
@@ -67,11 +71,44 @@ public class Board extends JPanel {
 
         //By default, set the snakes movement to be to the right
         currentDirection = Direction.RIGHT;
+        inGame = true;
     }
 
     public void runNextGameFrame() {
 
-        //Calculate snake movement
+        //Only run if the game is started
+        if(inGame) {
+
+            //Calculate snake movement
+            snake.moveSnake(gameBoard);
+
+            //If the snake is touching the wall of death (the last cell in each array) game over
+            for(int i = 0; i < boardCells; i++) {
+
+                if(gameBoard[0][i] == 1 || gameBoard[i][0] == 1) {
+                    inGame = false;
+                    gameOver();
+                }
+            }
+
+
+            //Debug
+            for(int y = 0; y < boardCells; y++ ) {
+
+                for(int x = 0; x < boardCells; x++) {
+
+                    System.out.print(gameBoard[x][y] + "|");
+                    if(x == boardCells - 1)
+                        System.out.print("\n");
+                }
+            }
+        }
+
+    }
+
+    private void gameOver() {
+
+        //Game over logic here
     }
 
 }

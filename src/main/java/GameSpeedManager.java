@@ -39,7 +39,7 @@ public class GameSpeedManager extends Thread {
             while (now - lastUpdateTime > timeBetweenUpdates && updateCount < maxUpdatesBeforeRender) {
 
                 //TODO: ADD UPDATE GAME METHOD
-                //Game.runNextGameFrame();
+                Core.runNextGameFrame();
                 lastUpdateTime += timeBetweenUpdates;
                 updateCount++;
             }
@@ -55,8 +55,8 @@ public class GameSpeedManager extends Thread {
             if (thisSecond > lastSecondTime) {
 
                 //TODO: Update the assets frame here
-
-                System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
+                Core.runNextGameFrame();
+                //System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
                 gameFps = frameCount;
                 frameCount = 0;
                 lastSecondTime = thisSecond;

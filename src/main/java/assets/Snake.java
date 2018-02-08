@@ -2,9 +2,7 @@ package assets;
 
 import enums.Direction;
 
-import java.awt.*;
 import java.util.List;
-import java.util.Queue;
 import java.util.Vector;
 
 
@@ -46,7 +44,7 @@ public class Snake {
         
     }
 
-    public void moveSnake() {
+    public void moveSnake(int[][] gameBoard) {
 
         //Each joint of the snake travels in the direction of the one in front of it. Iterate through IDs
         for(int i = 0; i < snakeJoints.size(); i++) {
@@ -73,12 +71,24 @@ public class Snake {
             //Otherwise, bump the coordinates of the joint given the direction it travels
             switch(leadDirection) {
 
-                case UP: currentJoint.setY(currentJoint.getY() + 1); break;
-                case DOWN: currentJoint.setY(currentJoint.getY() - 1); break;
-                case LEFT: currentJoint.setX(currentJoint.getX() - 1); break;
-                case RIGHT: currentJoint.setX(currentJoint.getX() + 1); break;
+                case UP: shiftJoint(gameBoard, currentJoint, Direction.UP); currentJoint.setY(currentJoint.getY() + 1); break;
+                case DOWN: shiftJoint(gameBoard, currentJoint, Direction.DOWN); currentJoint.setY(currentJoint.getY() - 1); break;
+                case LEFT: shiftJoint(gameBoard, currentJoint, Direction.LEFT); currentJoint.setX(currentJoint.getX() - 1); break;
+                case RIGHT: shiftJoint(gameBoard, currentJoint, Direction.RIGHT); currentJoint.setX(currentJoint.getX() + 1); break;
                 
             }
+        }
+    }
+
+    private void shiftJoint(int[][] gameBoard, Joint joint, Direction direction) {
+
+        switch(direction) {
+
+            case UP: gameBoard[joint.getX()][joint.getY()] = 0; gameBoard[joint.getX()][joint.getY() + 1] = 1; break;
+            case DOWN: gameBoard[joint.getX()][joint.getY()] = 0; gameBoard[joint.getX()][joint.getY() - 1] = 1; break;
+            case LEFT: gameBoard[joint.getX()][joint.getY()] = 0; gameBoard[joint.getX() - 1][joint.getY()] = 1; break;
+            case RIGHT: gameBoard[joint.getX()][joint.getY()] = 0; gameBoard[joint.getX() + 1][joint.getY()] = 1; break;
+
         }
     }
 

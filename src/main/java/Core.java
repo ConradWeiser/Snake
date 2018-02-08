@@ -37,7 +37,7 @@ public class Core extends JFrame {
 
     public static void runNextGameFrame() {
 
-        //Do things here
+        board.runNextGameFrame();
 
     }
 
