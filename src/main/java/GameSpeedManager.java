@@ -1,5 +1,8 @@
 import game.Board;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class GameSpeedManager extends Thread {
 
     //How many hertz is the game running in?
@@ -77,5 +80,14 @@ public class GameSpeedManager extends Thread {
             }
 
         }
+    }
+
+    public static void main(String[] args) {
+
+        EventQueue.invokeLater(() -> {
+
+            JFrame game = new Core();
+            game.setVisible(true);
+        });
     }
 }
