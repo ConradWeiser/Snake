@@ -1,17 +1,15 @@
-import game.Board;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class GameSpeedManager extends Thread {
 
-    //How many hertz is the game running in?
+    //How many hertz is the assets running in?
     final double gameSpeed = 5.0;
 
-    //Calculate how many nanoseconds each frame should take for our target game hertz
+    //Calculate how many nanoseconds each frame should take for our target assets hertz
     final double timeBetweenUpdates = 1000000000 / gameSpeed;
 
-    //At most, we'll update the game this many times before a new render
+    //At most, we'll update the assets this many times before a new render
     final int maxUpdatesBeforeRender = 1;
 
     //If we're able to get as high as the given FPS, don't render again
@@ -31,13 +29,13 @@ public class GameSpeedManager extends Thread {
         //Get the FPS
         int lastSecondTime = (int) (lastUpdateTime / 1000000000);
 
-        //Only calculate game changes if the game is running
+        //Only calculate assets changes if the assets is running
         while (Board.inGame) {
 
             double now = System.nanoTime();
             int updateCount = 0;
 
-            //Do as many game updates required, if the system needs to play catchup
+            //Do as many assets updates required, if the system needs to play catchup
             while (now - lastUpdateTime > timeBetweenUpdates && updateCount < maxUpdatesBeforeRender) {
 
                 //TODO: ADD UPDATE GAME METHOD
@@ -56,7 +54,7 @@ public class GameSpeedManager extends Thread {
             int thisSecond = (int) (lastUpdateTime / 1000000000);
             if (thisSecond > lastSecondTime) {
 
-                //TODO: Update the game frame here
+                //TODO: Update the assets frame here
 
                 System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
                 gameFps = frameCount;
