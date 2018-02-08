@@ -62,7 +62,7 @@ public class Board extends JPanel {
         gameBoard = new int[boardCells][boardCells];
 
         //SNAAAAAKKEE
-        this.snake = new Snake(boardCells);
+        this.snake = new Snake(boardCells, gameBoard);
         startGame();
 
     }
@@ -93,7 +93,7 @@ public class Board extends JPanel {
 
 
             //Debug
-            for(int y = 0; y < boardCells; y++ ) {
+/*            for(int y = 0; y < boardCells; y++ ) {
 
                 for(int x = 0; x < boardCells; x++) {
 
@@ -102,6 +102,7 @@ public class Board extends JPanel {
                         System.out.print("\n");
                 }
             }
+            */
         }
 
     }

@@ -22,7 +22,7 @@ public class Snake {
      * Constructor requiring the board dimensions, in order to ensure that the snake is spawned in bounds
      * @param boardCells the number of cells available on the board. Allowing us to center the snake
      */
-    public Snake(int boardCells) {
+    public Snake(int boardCells, int[][] gameBoard) {
 
         //Midpoint of the array
         int jointPoint = boardCells / 2;
@@ -30,9 +30,20 @@ public class Snake {
         //We are starting with three joints
         snakeJoints = new Vector<>();
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i <= 3; i++) {
             //Since the snake starts out going right, spawn the pieces to the left
             snakeJoints.add(new Joint((jointPoint - i), jointPoint));
+            gameBoard[jointPoint - i][jointPoint] = 1;
+        }
+
+        for(int y = 0; y < boardCells; y++ ) {
+
+            for(int x = 0; x < boardCells; x++) {
+
+                System.out.print(gameBoard[x][y] + "|");
+                if(x == boardCells - 1)
+                    System.out.print("\n");
+            }
         }
     }
 
