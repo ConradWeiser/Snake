@@ -35,16 +35,6 @@ public class Snake {
             snakeJoints.add(new Joint((jointPoint - i), jointPoint));
             gameBoard[jointPoint - i][jointPoint] = 1;
         }
-
-        for(int y = 0; y < boardCells; y++ ) {
-
-            for(int x = 0; x < boardCells; x++) {
-
-                System.out.print(gameBoard[x][y] + "|");
-                if(x == boardCells - 1)
-                    System.out.print("\n");
-            }
-        }
     }
 
     //Get the head coordinate of the snake
@@ -106,25 +96,25 @@ public class Snake {
     private Direction getDirectionOfAdjacentJoint(Joint trail, Joint lead) {
 
         //Case if the trail is to the right of the lead
-        if(trail.getX() == (lead.getX() - 1)) {
+        if(trail.getX() < (lead.getX())) {
 
             return Direction.LEFT;
         }
 
         //Case if the trail is to the left of the lead
-        else if(trail.getX() == (lead.getX() + 1)) {
+        else if(trail.getX() > (lead.getX())) {
 
             return Direction.RIGHT;
         }
 
         //Case if the trail is above the lead
-        else if(trail.getY() == (lead.getY() - 1)) {
+        else if(trail.getY() < (lead.getY())) {
 
             return Direction.DOWN;
         }
 
         //Case if the trail is below the lead
-        else if(trail.getY() == (lead.getY() + 1)) {
+        else if(trail.getY() > (lead.getY())) {
 
             return Direction.UP;
         }
@@ -139,5 +129,9 @@ public class Snake {
 
     public void setSnakeDirection(Direction snakeDirection) {
         this.snakeDirection = snakeDirection;
+    }
+
+    public List<Joint> getSnakeJoints() {
+        return snakeJoints;
     }
 }

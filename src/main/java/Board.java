@@ -1,3 +1,4 @@
+import assets.Food;
 import assets.Joint;
 import assets.Snake;
 import enums.Direction;
@@ -27,27 +28,24 @@ public class Board extends JPanel {
     //Is the assets currently running?
     public static volatile boolean inGame = false;
 
-    //A value used to set the assets speed. A delay between each tick.
-    private static int speed = 50;
-
     //The snake object running around at the moment
     private Snake snake;
-
-    private Direction currentDirection;
 
     //An array representation of the game
     public int[][] gameBoard;
 
+    private Food currentFood;
+
     public Board() {
 
         //Init the user view panel
-        //this.setBackground(Color.GRAY);
-        //this.setFocusable(true);
-        //this.setFocusable(true);
-        //this.setFocusTraversalKeysEnabled(false);
-        //requestFocus();
+        this.setBackground(Color.GRAY);
+        this.setFocusable(true);
+        this.setFocusable(true);
+        this.setFocusTraversalKeysEnabled(false);
+        requestFocus();
 
-        //this.setPreferredSize(new Dimension(boardWidth, boardHeight));
+        this.setPreferredSize(new Dimension(boardWidth, boardHeight));
 
         //Attach the key listener
         this.addKeyListener(new KeyManager());
@@ -63,6 +61,25 @@ public class Board extends JPanel {
 
         //SNAAAAAKKEE
         this.snake = new Snake(boardCells, gameBoard);
+
+        //Put some food somewhere
+        currentFood = new Food();
+        currentFood.createFood(boardCells, this.snake, gameBoard);
+
+        //Debug
+        for(int y = 0; y < boardCells; y++ ) {
+
+            for(int x = 0; x < boardCells; x++) {
+
+                System.out.print(gameBoard[x][y] + "|");
+                if(x == boardCells - 1)
+                    System.out.print("\n");
+            }
+        }
+
+        //Print out where food currently is
+        System.err.println("Food is currently at: (" + currentFood.getX() + "," + currentFood.getY() +")");
+
         startGame();
 
     }
@@ -70,8 +87,10 @@ public class Board extends JPanel {
     private void startGame() {
 
         //By default, set the snakes movement to be to the right
-        currentDirection = Direction.RIGHT;
+        snake.setSnakeDirection(Direction.UP);
         inGame = true;
+
+        //Debug out a current game field
     }
 
     public void runNextGameFrame() {
@@ -91,25 +110,40 @@ public class Board extends JPanel {
                 }
             }
 
+            //Tell us the current position
+            System.out.println("X: " + snake.getSnakeHeadLocation().getX() + " Y: " + snake.getSnakeHeadLocation().getY());
 
-            //Debug
-/*            for(int y = 0; y < boardCells; y++ ) {
-
-                for(int x = 0; x < boardCells; x++) {
-
-                    System.out.print(gameBoard[x][y] + "|");
-                    if(x == boardCells - 1)
-                        System.out.print("\n");
-                }
-            }
-            */
+            //The last thing we do is repaint the window
+            repaint();
         }
 
     }
 
+
+
+
     private void gameOver() {
 
         //Game over logic here
+    }
+
+    /**
+     * Function used to paint our images to the screen
+     * @param g the graphics object to be painted
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        draw(g);
+
+
+    }
+
+    void draw(Graphics g) {
+
+        //Color the fruit in
+        g.setColor(Color.RED);
     }
 
 }
