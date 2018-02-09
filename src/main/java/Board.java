@@ -39,7 +39,7 @@ public class Board extends JPanel {
     public Board() {
 
         //Init the user view panel
-        this.setBackground(Color.GRAY);
+        //this.setBackground(Color.GRAY);
         this.setFocusable(true);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
@@ -144,6 +144,30 @@ public class Board extends JPanel {
 
         //Color the fruit in
         g.setColor(Color.RED);
+        g.drawRect((boardWidth / pixelSizeWidth) * currentFood.getX(), (boardHeight / pixelSizeHeight) * currentFood.getY(),
+                pixelSizeWidth, pixelSizeHeight);
+
+        //Draw the SNAAAAKKKEEE
+        for(int i = 0; i < snake.getSnakeJoints().size(); i++) {
+
+            //If we're drawing the snake head, set the color to black
+            if(i == 0)
+                g.setColor(Color.BLACK);
+
+            else
+                g.setColor(Color.BLUE);
+
+            //Fill the rectangle for the sneek
+            int jointX, jointY;
+            jointX = snake.getSnakeJoints().get(i).getX();
+            jointY = snake.getSnakeJoints().get(i).getY();
+
+            g.fillRect((boardWidth / pixelSizeWidth) * jointX, (boardHeight / pixelSizeHeight) * jointY, pixelSizeWidth, pixelSizeHeight);
+            
+        }
+
+        //Sync graphics together
+        Toolkit.getDefaultToolkit().sync();
     }
 
 }
