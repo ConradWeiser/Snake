@@ -4,7 +4,7 @@ import java.awt.*;
 public class GameSpeedManager extends Thread {
 
     //How many hertz is the assets running in?
-    final double gameSpeed = 5.0;
+    final double gameSpeed = 10;
 
     //Calculate how many nanoseconds each frame should take for our target assets hertz
     final double timeBetweenUpdates = 1000000000 / gameSpeed;
@@ -13,7 +13,7 @@ public class GameSpeedManager extends Thread {
     final int maxUpdatesBeforeRender = 1;
 
     //If we're able to get as high as the given FPS, don't render again
-    final double targetFps = 5;
+    final double targetFps = 40;
     final double targetTimeBetweenRenders = 1000000000 / targetFps;
 
     private int frameCount = 0;

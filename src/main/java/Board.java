@@ -11,7 +11,7 @@ public class Board extends JPanel {
 
     //TODO: Allow for custom assets dimensions
     //Set the board dimensions pixel-wise
-    final private static int boardWidth = 1700;
+    final private static int boardWidth = 980;
     final private static int boardHeight = 980;
 
     //Set the amount of cells spanning across the horizontal and vertical (Default: 64 --> 64x64 grid)
@@ -39,7 +39,7 @@ public class Board extends JPanel {
     public Board() {
 
         //Init the user view panel
-        //this.setBackground(Color.GRAY);
+        this.setBackground(Color.DARK_GRAY);
         this.setFocusable(true);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
@@ -60,8 +60,8 @@ public class Board extends JPanel {
         //Create the array representing the game board to the size specified and fill it with zeroes
         gameBoard = new int[boardCells][boardCells];
 
-        //SNAAAAAKKEE
-        this.snake = new Snake(boardCells, gameBoard);
+        //SNAAAAAKKEE - Defaulting to the right direction
+        this.snake = new Snake(boardCells, gameBoard, Direction.RIGHT);
 
         //Put some food somewhere
         currentFood = new Food();
@@ -87,17 +87,19 @@ public class Board extends JPanel {
 
     private void startGame() {
 
-        //By default, set the snakes movement to be to the right
-        snake.setSnakeDirection(Direction.UP);
         inGame = true;
 
-        //Debug out a current game field
     }
 
     public void runNextGameFrame() {
 
         //Only run if the game is started
         if(inGame) {
+
+            //Pop the next movement input by the user, and set the snake direction to it, if one exists
+            Direction playerRequestedDirection = Core.keyQueue.poll();
+            if(playerRequestedDirection != null)
+                snake.getSnakeHead().setJointDirection(playerRequestedDirection);
 
             //Calculate snake movement
             snake.moveSnake(gameBoard);
@@ -112,16 +114,12 @@ public class Board extends JPanel {
             }
 
             //If the head is touching a fruit, add a new joint and create a new fruit
-            if(gameBoard[snake.getSnakeHeadLocation().getX()][snake.getSnakeHeadLocation().getY()] == 2) {
+            if(gameBoard[snake.getSnakeHead().getX()][snake.getSnakeHead().getY()] == 2) {
 
                 snake.createNewJoint();
                 currentFood.createFood(boardCells, snake, gameBoard);
             }
 
-
-
-            //Tell us the current position
-            System.out.println("X: " + snake.getSnakeHeadLocation().getX() + " Y: " + snake.getSnakeHeadLocation().getY());
 
             //The last thing we do is repaint the window
             this.repaint();
