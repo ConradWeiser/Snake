@@ -111,6 +111,15 @@ public class Board extends JPanel {
                 }
             }
 
+            //If the head is touching a fruit, add a new joint and create a new fruit
+            if(gameBoard[snake.getSnakeHeadLocation().getX()][snake.getSnakeHeadLocation().getY()] == 2) {
+
+                snake.createNewJoint();
+                currentFood.createFood(boardCells, snake, gameBoard);
+            }
+
+
+
             //Tell us the current position
             System.out.println("X: " + snake.getSnakeHeadLocation().getX() + " Y: " + snake.getSnakeHeadLocation().getY());
 

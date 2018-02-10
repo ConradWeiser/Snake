@@ -123,8 +123,17 @@ public class Snake {
             return null;
     }
 
-    public Direction getSnakeDirection() {
-        return snakeDirection;
+    /**
+     * Method which adds a new joint on the tail
+     */
+    public void createNewJoint() {
+
+        //Spawn it at the same location as the last joint in the snake to prevent game over glitches
+        Joint frontalJoint = snakeJoints.get(snakeJoints.size() - 1);
+
+        Joint newJoint = new Joint(frontalJoint.getX(), frontalJoint.getY());
+        snakeJoints.add(newJoint);
+
     }
 
     public void setSnakeDirection(Direction snakeDirection) {
