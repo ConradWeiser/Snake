@@ -137,6 +137,7 @@ public class Board extends JPanel {
 
                 snake.createNewJoint();
                 currentFood.createFood(boardCells, snake, gameBoard);
+                gameScore++;
             }
 
 
@@ -164,6 +165,7 @@ public class Board extends JPanel {
         super.paintComponent(g);
         drawBorders(g);
         drawGameElements(g);
+        drawScore(g);
 
     }
 
@@ -216,7 +218,9 @@ public class Board extends JPanel {
 
     void drawScore(Graphics g) {
 
-        //TODO: Draw the score in someplace
+        g.setFont(new Font("Serif", Font.BOLD, 20));
+        g.setColor(Color.orange);
+        g.drawString("Score: " + this.gameScore, boardWidth - 100, boardHeight - 20);
     }
 
     public int getGameScore() {
