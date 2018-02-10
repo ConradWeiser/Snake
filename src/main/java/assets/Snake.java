@@ -32,7 +32,6 @@ public class Snake {
             gameBoard[jointPoint - i][jointPoint] = 1;
         }
 
-        System.out.println("Complete");
     }
 
     //Get the head coordinate of the snake

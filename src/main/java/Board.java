@@ -1,11 +1,9 @@
 import assets.Food;
-import assets.Joint;
 import assets.Snake;
 import enums.Direction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Board extends JPanel {
 
@@ -35,6 +33,10 @@ public class Board extends JPanel {
     public int[][] gameBoard;
 
     private Food currentFood;
+
+    private boolean gameSetup = false;
+
+    private int gameScore = 0;
 
     public Board() {
 
@@ -77,9 +79,6 @@ public class Board extends JPanel {
                     System.out.print("\n");
             }
         }
-
-        //Print out where food currently is
-        System.err.println("Food is currently at: (" + currentFood.getX() + "," + currentFood.getY() +")");
 
         startGame();
 
@@ -144,15 +143,16 @@ public class Board extends JPanel {
 
     protected void paintComponent(Graphics g) {
 
-
         super.paintComponent(g);
-        draw(g);
+        drawBorders(g);
+        drawGameElements(g);
+
     }
 
-    void draw(Graphics g) {
+    void drawGameElements(Graphics g) {
 
         //Color the fruit in
-        g.setColor(Color.RED);
+        g.setColor(Color.GREEN);
 
         g.fillRect((boardWidth / boardCells) * currentFood.getX(), (boardHeight / boardCells) * currentFood.getY(), pixelSizeWidth , pixelSizeHeight);
 
@@ -179,4 +179,29 @@ public class Board extends JPanel {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    void drawBorders(Graphics g) {
+
+        //Padding value
+        int padding = (int) Math.sqrt(boardCells);
+
+        //Borders are going to be red
+        g.setColor(Color.RED);
+        g.fillRect(0, 0, boardWidth, padding);
+        g.fillRect(0, 0, padding, boardHeight);
+        g.fillRect(boardWidth - padding, 0, boardCells, boardHeight);
+        g.fillRect(0, boardHeight - padding, boardWidth, boardCells);
+
+
+        Toolkit.getDefaultToolkit().sync();
+        gameSetup = false;
+    }
+
+    void drawScore(Graphics g) {
+
+        //TODO: Draw the score in someplace
+    }
+
+    public int getGameScore() {
+        return gameScore;
+    }
 }
