@@ -1,4 +1,5 @@
 import assets.Food;
+import assets.Joint;
 import assets.Snake;
 import enums.Direction;
 
@@ -95,14 +96,16 @@ public class Board extends JPanel {
         //Only run if the game is started
         if(inGame) {
 
+            Joint snakeHead = snake.getSnakeHead();
+
             //Pop the next movement input by the user, and set the snake direction to it, if one exists
             Direction playerRequestedDirection = Core.keyQueue.poll();
             if(playerRequestedDirection != null)
-                snake.getSnakeHead().setJointDirection(playerRequestedDirection);
+                snakeHead.setJointDirection(playerRequestedDirection);
 
 
             //If the snake is touching the wall of death (the last cell in each array) game over
-            if(snake.getSnakeHead().getX() == 0 || snake.getSnakeHead().getX() == boardCells - 1 || snake.getSnakeHead().getY() == 0 || snake.getSnakeHead().getY() == boardCells - 1) {
+            if(snakeHead.getX() == 0 || snakeHead.getX() == boardCells - 1 || snakeHead.getY() == 0 || snakeHead.getY() == boardCells - 1) {
 
                 //Game over!
                 inGame = false;
@@ -113,6 +116,21 @@ public class Board extends JPanel {
 
             //Calculate snake movement
             snake.moveSnake(gameBoard);
+
+            //If Sneehk is touching itself, game over
+            for(int i = 1; i < snake.getSnakeJoints().size(); i++) {
+
+                //If the head is at any of these coordinates, game over
+                Joint currentJoint = snake.getSnakeJoints().get(i);
+
+                if(snakeHead.getX() == currentJoint.getX() && snakeHead.getY() == currentJoint.getY()) {
+
+                    //GAME OVEEERRR
+                    inGame = false;
+                    gameOver();
+                    return;
+                }
+            }
 
             //If the head is touching a fruit, add a new joint and create a new fruit
             if(currentFood.getX() == snake.getSnakeHead().getX() && currentFood.getY() == snake.getSnakeHead().getY()) {
