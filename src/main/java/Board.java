@@ -114,7 +114,7 @@ public class Board extends JPanel {
             }
 
             //If the head is touching a fruit, add a new joint and create a new fruit
-            if(gameBoard[snake.getSnakeHead().getX()][snake.getSnakeHead().getY()] == 2) {
+            if(currentFood.getX() == snake.getSnakeHead().getX() && currentFood.getY() == snake.getSnakeHead().getY()) {
 
                 snake.createNewJoint();
                 currentFood.createFood(boardCells, snake, gameBoard);
@@ -152,8 +152,7 @@ public class Board extends JPanel {
         //Color the fruit in
         g.setColor(Color.RED);
 
-
-        g.fillRect(currentFood.getX(), currentFood.getY(), pixelSizeWidth , pixelSizeHeight);
+        g.fillRect((boardWidth / boardCells) * currentFood.getX(), (boardHeight / boardCells) * currentFood.getY(), pixelSizeWidth , pixelSizeHeight);
 
         //Draw the SNAAAAKKKEEE
         for(int i = 0; i < snake.getSnakeJoints().size(); i++) {

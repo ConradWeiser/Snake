@@ -50,6 +50,14 @@ public class Snake {
 
             Joint currentJoint = snakeJoints.get(i);
 
+            //If the joint is still, do not move it
+            if(currentJoint.getJointDirection() == Direction.STILL) {
+
+                handleDirectionChange(currentJoint, snakeJoints.get(i - 1));
+                continue;
+
+            }
+
             //Move all of the joints in the current direction they're given
             switch(currentJoint.getJointDirection()) {
 
@@ -65,14 +73,19 @@ public class Snake {
                 continue;
             }
 
-            switch(getDirectionOfAdjacentJoint(currentJoint, snakeJoints.get(i - 1))) {
+            handleDirectionChange(currentJoint, snakeJoints.get(i - 1));
 
-                case UP: currentJoint.setJointDirection(Direction.UP); break;
-                case DOWN: currentJoint.setJointDirection(Direction.DOWN); break;
-                case LEFT: currentJoint.setJointDirection(Direction.LEFT); break;
-                case RIGHT: currentJoint.setJointDirection(Direction.RIGHT); break;
-            }
+        }
+    }
 
+    private void handleDirectionChange(Joint currentJoint, Joint leadJoint) {
+
+        switch(getDirectionOfAdjacentJoint(currentJoint, leadJoint)) {
+
+            case UP: currentJoint.setJointDirection(Direction.UP); break;
+            case DOWN: currentJoint.setJointDirection(Direction.DOWN); break;
+            case LEFT: currentJoint.setJointDirection(Direction.LEFT); break;
+            case RIGHT: currentJoint.setJointDirection(Direction.RIGHT); break;
         }
     }
 
@@ -144,8 +157,8 @@ public class Snake {
         //Spawn it at the same location as the last joint in the snake to prevent game over glitches
         Joint frontalJoint = snakeJoints.get(snakeJoints.size() - 1);
 
-        Joint newJoint = new Joint(frontalJoint.getX(), frontalJoint.getY(), frontalJoint.getJointDirection());
-        //TODO: Pause one before moving
+        Joint newJoint = new Joint(frontalJoint.getX(), frontalJoint.getY(), Direction.STILL);
+
         snakeJoints.add(newJoint);
 
     }
