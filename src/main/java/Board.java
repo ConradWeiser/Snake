@@ -43,6 +43,7 @@ public class Board extends JPanel {
         this.setFocusable(true);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
+
         requestFocus();
 
         this.setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -114,7 +115,7 @@ public class Board extends JPanel {
             System.out.println("X: " + snake.getSnakeHeadLocation().getX() + " Y: " + snake.getSnakeHeadLocation().getY());
 
             //The last thing we do is repaint the window
-            repaint();
+            this.repaint();
         }
 
     }
@@ -131,21 +132,21 @@ public class Board extends JPanel {
      * Function used to paint our images to the screen
      * @param g the graphics object to be painted
      */
-    @Override
+
     protected void paintComponent(Graphics g) {
+
 
         super.paintComponent(g);
         draw(g);
-
-
     }
 
     void draw(Graphics g) {
 
         //Color the fruit in
         g.setColor(Color.RED);
-        g.drawRect((boardWidth / pixelSizeWidth) * currentFood.getX(), (boardHeight / pixelSizeHeight) * currentFood.getY(),
-                pixelSizeWidth, pixelSizeHeight);
+
+
+        g.fillRect(currentFood.getX(), currentFood.getY(), pixelSizeWidth , pixelSizeHeight);
 
         //Draw the SNAAAAKKKEEE
         for(int i = 0; i < snake.getSnakeJoints().size(); i++) {
@@ -162,7 +163,7 @@ public class Board extends JPanel {
             jointX = snake.getSnakeJoints().get(i).getX();
             jointY = snake.getSnakeJoints().get(i).getY();
 
-            g.fillRect((boardWidth / pixelSizeWidth) * jointX, (boardHeight / pixelSizeHeight) * jointY, pixelSizeWidth, pixelSizeHeight);
+            g.fillRect((boardWidth / boardCells) * jointX, (boardHeight / boardCells) * jointY, pixelSizeWidth, pixelSizeHeight);
             
         }
 

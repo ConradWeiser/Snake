@@ -21,13 +21,16 @@ public class Core extends JFrame {
 
         //Create a new assets instance
         Core.board = new Board();
-
+        this.setLayout(new BorderLayout());
         add(Core.board);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setResizable(false);
+        setBackground(Color.DARK_GRAY);
         pack();
         setTitle("Snaaaaakke");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 
         //Spawn the assets speed manager thread
@@ -44,7 +47,7 @@ public class Core extends JFrame {
     public static void main(String[] args) {
 
         //Create the game
-        EventQueue.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             JFrame game = new Core();
             game.setVisible(true);
         });
