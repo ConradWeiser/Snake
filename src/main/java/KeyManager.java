@@ -6,6 +6,9 @@ import java.awt.event.KeyListener;
 
 public class KeyManager implements KeyListener {
 
+    //Default to right, as that is the direction we start moving
+    private Direction previousDirectionInput = Direction.RIGHT;
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -34,8 +37,10 @@ public class KeyManager implements KeyListener {
 
     private void addKeyToGameBuffer(Direction keyPress) {
 
-        System.err.println("OHH YES");
-        Core.keyQueue.add(keyPress);
+        if(previousDirectionInput != keyPress)
+            Core.keyQueue.add(keyPress);
+
+        previousDirectionInput = keyPress;
 
     }
 }
