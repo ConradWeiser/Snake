@@ -101,17 +101,19 @@ public class Board extends JPanel {
             if(playerRequestedDirection != null)
                 snake.getSnakeHead().setJointDirection(playerRequestedDirection);
 
-            //Calculate snake movement
-            snake.moveSnake(gameBoard);
 
             //If the snake is touching the wall of death (the last cell in each array) game over
-            for(int i = 0; i < boardCells; i++) {
+            if(snake.getSnakeHead().getX() == 0 || snake.getSnakeHead().getX() == boardCells - 1 || snake.getSnakeHead().getY() == 0 || snake.getSnakeHead().getY() == boardCells - 1) {
 
-                if(gameBoard[0][i] == 1 || gameBoard[i][0] == 1) {
-                    inGame = false;
-                    gameOver();
-                }
+                //Game over!
+                inGame = false;
+                gameOver();
+                return;
+
             }
+
+            //Calculate snake movement
+            snake.moveSnake(gameBoard);
 
             //If the head is touching a fruit, add a new joint and create a new fruit
             if(currentFood.getX() == snake.getSnakeHead().getX() && currentFood.getY() == snake.getSnakeHead().getY()) {
